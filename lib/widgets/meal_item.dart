@@ -25,7 +25,7 @@ class MealItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       clipBehavior: Clip.hardEdge,
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       elevation: 2,
       child: InkWell(
         onTap: () {},
