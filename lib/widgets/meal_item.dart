@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:navigation/models/meal.dart';
+
 import 'package:navigation/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({super.key, required this.meal, required this.onSelectMeal});
 
   final Meal meal;
+  final void Function(BuildContext context, Meal meal) onSelectMeal;
 
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
@@ -28,7 +30,9 @@ class MealItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(context, meal);
+        },
         child: Stack(
           children: [
             FadeInImage(
@@ -61,7 +65,7 @@ class MealItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 14,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
