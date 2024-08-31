@@ -56,7 +56,7 @@ class _TabsScreenState extends State<TabsScreen> {
           builder: (ctx) => const FiltersScreen(),
         ),
       );
-    } else {}
+    }
   }
 
   @override
