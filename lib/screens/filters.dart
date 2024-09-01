@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-
-enum Filter {
-  glutenFree,
-  lactoseFree,
-  vegetarian,
-  vegan,
-}
+import 'package:navigation/screens/tabs.dart';
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key});
+  const FiltersScreen(
+      {super.key, required this.onChangedFilter, required this.currentFilter});
+
+  final void Function(Map<Filter, bool> filters) onChangedFilter;
+  final Map<Filter, bool> currentFilter;
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -21,26 +19,23 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _veganFilterSet = false;
 
   @override
+  void initState() {
+    super.initState();
+    _glutenFreeFilterSet = widget.currentFilter[Filter.glutenFree]!;
+    _lactoseFreeFilterSet = widget.currentFilter[Filter.lactoseFree]!;
+    _vegetarianFilterSet = widget.currentFilter[Filter.vegetarian]!;
+    _veganFilterSet = widget.currentFilter[Filter.vegan]!;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
       ),
-      // drawer: MainDrawer(
-      //   onSelectScreen: (identifire) {
-      //     Navigator.of(context).pop();
-      //     if (identifire == 'meals') {
-      //       Navigator.of(context).push(
-      //         MaterialPageRoute(
-      //           builder: (ctx) => TabsScreen(),
-      //         ),
-      //       );
-      //     }
-      //   },
-      // ),
       body: PopScope(
         onPopInvokedWithResult: (didPop, result) {
-          Navigator.of(context).pop({
+          widget.onChangedFilter({
             Filter.glutenFree: _glutenFreeFilterSet,
             Filter.lactoseFree: _lactoseFreeFilterSet,
             Filter.vegan: _veganFilterSet,
@@ -145,7 +140,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
               activeColor: Theme.of(context).colorScheme.tertiary,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
-                vertical: 8,
               ),
             )
           ],
